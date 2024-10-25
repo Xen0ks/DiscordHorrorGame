@@ -29,6 +29,7 @@ public class Door : MonoBehaviour
     public void Switch()
     {
         if (locked && !GameManager.instance.hasKey) return;
+        SoundManager.instance.DoorSfx();
         if (!isOpen)
         {
             GetComponent<Collider>().isTrigger = true;

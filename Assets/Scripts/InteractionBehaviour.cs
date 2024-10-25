@@ -20,6 +20,8 @@ public class InteractionBehaviour : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(holder.position, holder.forward, out hit, interactRange, interactMask) && Input.GetKeyDown(KeyCode.Mouse0) && !phone.inspected)
         {
+            SoundManager.instance.InteractSfx();
+
             if (hit.transform.TryGetComponent<Door>(out Door d))
             {
                 d.Switch();

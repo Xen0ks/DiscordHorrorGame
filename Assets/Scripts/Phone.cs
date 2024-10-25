@@ -178,25 +178,45 @@ public class Phone : MonoBehaviour
 
     public void ToggleFlash()
     {
+        SoundManager.instance.UiSfx();
         if (!flashOn && batteryLevel <= 0) return;
+        
 
         flash.gameObject.SetActive(!flash.gameObject.activeSelf);
         flashOn = flash.gameObject.activeSelf;
+        if (flashOn)
+        {
+            Player.instance.GetDetectable();
+        }
+        else
+        {
+            Player.instance.GetUnDetectable();
+        }
+
     }
 
     public void OpenSets()
     {
+        SoundManager.instance.UiSfx();
         SettingsPanel.SetActive(true);
     }
 
     public void CloseSets()
     {
+        SoundManager.instance.UiSfx();
         SettingsPanel.SetActive(false);
     }
 
     public void Notif(Sprite s , string title, string content)
     {
+        SoundManager.instance.NotifSfx();
+
         NotifPrefab notif = Instantiate(notifPrefab, notifParent).GetComponent<NotifPrefab>();
         notif.Set(s, title, content);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
