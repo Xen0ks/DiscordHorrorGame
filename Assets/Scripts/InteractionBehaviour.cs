@@ -44,6 +44,23 @@ public class InteractionBehaviour : MonoBehaviour
                 s.Switch();
             }
 
+            if (hit.transform.TryGetComponent<Cardboard>(out Cardboard c) && !c.hidden)
+            {
+                c.Switch(GetComponent<Player>());
+            }
+
+            if (hit.transform.TryGetComponent<Key>(out Key k))
+            {
+                GameManager.instance.hasKey = true;
+                Destroy(k.gameObject);
+            }
+
+            if (hit.transform.TryGetComponent<Uninstaller>(out Uninstaller u))
+            {
+                Debug.Log("sqdmlfkj");
+                StartCoroutine(GameManager.instance.End());
+            }
+
         }
     }
 }

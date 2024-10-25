@@ -13,9 +13,14 @@ public class GameManager : MonoBehaviour
     public GameObject crosshair;
     public GameObject player;
     public Animator fade;
+    public Transform replacePoint;
 
     public bool switchOn;
     public Transform redSwitch;
+
+    public bool hasKey;
+
+    public GameObject[] enableOnPower;
 
 
 
@@ -30,6 +35,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        if (player.GetComponent<CharacterController>().enabled)
+        {
+            replacePoint.position = player.transform.position;
+        }
     }
 
     public IEnumerator Screamer()
@@ -42,10 +51,22 @@ public class GameManager : MonoBehaviour
         screamered = true;
     }
 
+    public IEnumerator End()
+    {
+        fade.SetTrigger("Fade");
+        yield return new WaitForSeconds(0.6f);
+        SceneManager.LoadScene(1);
+    }
+
     public void SwitchOn()
     {
         switchOn = true;
         redSwitch.localRotation = Quaternion.Euler(-52, 0, 0);
+
+        foreach (var c in enableOnPower)
+        {
+            c.SetActive(true);
+        }
     }
 }
 

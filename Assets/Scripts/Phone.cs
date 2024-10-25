@@ -26,11 +26,20 @@ public class Phone : MonoBehaviour
     public Transform batteryUI;
     public Transform barPrefab;
 
+    public GameObject notifPrefab;
+    public Transform notifParent;
+
     public int batteryLevel = 4;
 
     bool flashOn = true;
 
     Vector3 vel = Vector3.zero;
+
+    public static Phone instance;
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -80,11 +89,14 @@ public class Phone : MonoBehaviour
 
     public IEnumerator BatteryDeload()
     {
-        while(batteryLevel > 0)
+        while(true)
         {
-            if (hasBattery || batteryLevel <= 0) yield break;
             yield return new WaitForSeconds(30);
-            if(flashOn) batteryLevel--;
+            if (batteryLevel > 0 && flashOn)
+            {
+                batteryLevel--;
+            }
+
             if (batteryLevel <= 0)
             {
                 batteryLevel = 0;
@@ -97,10 +109,10 @@ public class Phone : MonoBehaviour
 
     public IEnumerator BatteryReload()
     {
-        while (batteryLevel > 4 && hasBattery)
+        while (true)
         {
             yield return new WaitForSeconds(45);
-            if(batteryLevel < 4)
+            if(batteryLevel < 4 && hasBattery)
             {
                 batteryLevel++;
             }
@@ -118,7 +130,6 @@ public class Phone : MonoBehaviour
         {
             Instantiate(barPrefab, batteryUI);
         }
-
     }
 
 
@@ -181,5 +192,11 @@ public class Phone : MonoBehaviour
     public void CloseSets()
     {
         SettingsPanel.SetActive(false);
+    }
+
+    public void Notif(Sprite s , string title, string content)
+    {
+        NotifPrefab notif = Instantiate(notifPrefab, notifParent).GetComponent<NotifPrefab>();
+        notif.Set(s, title, content);
     }
 }

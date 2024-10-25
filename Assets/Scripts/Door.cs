@@ -4,6 +4,7 @@ public class Door : MonoBehaviour
 {
     public bool right;        // Indique si la porte est à droite (true) ou à gauche (false)
     public bool isOpen = false;  // État d'ouverture de la porte (fermée par défaut)
+    public bool locked = false;
 
     public bool aiOpenable = false;
     private float openAngle = 90f;   // Angle d'ouverture de la porte (100 degrés)
@@ -27,6 +28,7 @@ public class Door : MonoBehaviour
 
     public void Switch()
     {
+        if (locked && !GameManager.instance.hasKey) return;
         if (!isOpen)
         {
             GetComponent<Collider>().isTrigger = true;

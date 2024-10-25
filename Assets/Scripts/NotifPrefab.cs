@@ -1,16 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NotifPrefab : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Image image;
+    public Text title;
+    public Text content;
 
-    // Update is called once per frame
-    void Update()
+    public void Set(Sprite i, string t, string c)
     {
-        
+        image.sprite = i;
+        title.text = t;
+        content.text = c;
     }
 }
